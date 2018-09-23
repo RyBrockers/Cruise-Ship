@@ -3,7 +3,9 @@ const Ship = function () {
 }
 
 
-
+Ship.prototype.setSail = function setSail() {
+    this.startingPort = null;
+}
 
 
 
