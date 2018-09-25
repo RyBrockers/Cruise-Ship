@@ -2,6 +2,8 @@ const Ship = function Ship(itinerary) {
   this.itinerary = itinerary;
   this.currentPort = itinerary.ports[0];
   this.previousPort = null;
+
+  this.currentPort.addShip(this);
 };
 
 
@@ -14,6 +16,7 @@ Ship.prototype.setSail = function setSail() {
   }
 
   this.previousPort = this.currentPort;
+  this.previousPort.removeShip(this);
   this.currentPort = null;
 };
 
@@ -22,6 +25,7 @@ Ship.prototype.dock = function dock() {
   const previousPortIndex = itinerary.ports.indexOf(this.previousPort);
 
   this.currentPort = itinerary.ports[previousPortIndex + 1];
+  this.currentPort.addShip(this);
 };
 
 module.exports = Ship;
