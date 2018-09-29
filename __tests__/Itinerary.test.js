@@ -10,9 +10,9 @@ describe('Itinerary', () => {
 
   it('Has a ports property', () => {
     const hull = new Port('Hull');
-    const liverpool = new Port('Liverpool');
+    const calais = new Port('Calais');
 
-    const itinerary = new Itinerary([hull, liverpool]);
-    expect(itinerary.ports).toEqual([hull, liverpool]);
+    const itinerary = new Itinerary([hull, calais]);
+    expect(itinerary.ports).toEqual([hull, calais]);
   });
 });
