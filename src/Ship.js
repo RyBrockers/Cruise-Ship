@@ -1,31 +1,36 @@
-const Ship = function Ship(itinerary) {
-  this.itinerary = itinerary;
-  this.currentPort = itinerary.ports[0];
-  this.previousPort = null;
+(function exportShip() {
+  const Ship = function Ship(itinerary) {
+    this.itinerary = itinerary;
+    this.currentPort = itinerary.ports[0];
+    this.previousPort = null;
 
-  this.currentPort.addShip(this);
-};
+    this.currentPort.addShip(this);
+  };
 
 
-Ship.prototype.setSail = function setSail() {
-  const itinerary = this.itinerary;
-  const currentPortIndex = itinerary.ports.indexOf(this.currentPort);
+  Ship.prototype.setSail = function setSail() {
+    const itinerary = this.itinerary;
+    const currentPortIndex = itinerary.ports.indexOf(this.currentPort);
 
-  if (currentPortIndex === (itinerary.ports.length - 1)) {
-    throw new Error('End of itinerary reached');
+    if (currentPortIndex === (itinerary.ports.length - 1)) {
+      throw new Error('End of itinerary reached');
+    }
+
+    this.previousPort = this.currentPort;
+    this.previousPort.removeShip(this);
+    this.currentPort = null;
+  };
+
+  Ship.prototype.dock = function dock() {
+    const itinerary = this.itinerary;
+    const previousPortIndex = itinerary.ports.indexOf(this.previousPort);
+
+    this.currentPort = itinerary.ports[previousPortIndex + 1];
+    this.currentPort.addShip(this);
+  };
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = Ship;
+  } else {
+    window.Ship = Ship;
   }
-
-  this.previousPort = this.currentPort;
-  this.previousPort.removeShip(this);
-  this.currentPort = null;
-};
-
-Ship.prototype.dock = function dock() {
-  const itinerary = this.itinerary;
-  const previousPortIndex = itinerary.ports.indexOf(this.previousPort);
-
-  this.currentPort = itinerary.ports[previousPortIndex + 1];
-  this.currentPort.addShip(this);
-};
-
-module.exports = Ship;
+}());
